@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>All patients</title>
+    <style>
+        body {
+            font-family: 'lato', sans-serif;
+        }
+        .container {
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .buttons {
+            max-width: 1000px;
+            margin-left: 327px;
+        }
+        .btn-primary {
+            height: 73px;
+            position: relative;
+            left: 120px;
+        }
+        .btn-dark {
+            height: 73px;
+            width: 125px;
+            position: relative;
+            top: -73px;
+            left: 250px;
+        }
+        .btn-secondary {
+            height: 73px;
+            width: 125px;
+            position: relative;
+            top: -146px;
+            left: 395px;
+        }
+        h2 {
+            font-size: 26px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        h2 small {
+            font-size: 0.5em;
+        }
+        .responsive-table li {
+            border-radius: 3px;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        .responsive-table .table-header {
+            background-color: #95a5a6;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .responsive-table .table-row {
+            background-color: #fff;
+            box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .responsive-table .col-1 {
+            flex-basis: 20%;
+        }
+        .responsive-table .col-2 {
+            flex-basis: 25%;
+        }
+        .responsive-table .col-3 {
+            flex-basis: 35%;
+        }
+        .responsive-table .col-4 {
+            flex-basis: 20%;
+        }
+        .responsive-table .col-5 {
+            flex-basis: 12%;
+        }
+        @media all and (max-width: 767px) {
+            .responsive-table .table-header {
+                display: none;
+            }
+            .responsive-table li {
+                display: block;
+            }
+            .responsive-table .col {
+                flex-basis: 100%;
+            }
+            .responsive-table .col {
+                display: flex;
+                padding: 10px 0;
+            }
+            .responsive-table .col:before {
+                color: #6c7a89;
+                padding-right: 10px;
+                content: attr(data-label);
+                flex-basis: 50%;
+                text-align: right;
+            }
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+
+<div class="container">
+    <h2>Patient</h2>
+    <ul class="responsive-table">
+        <li class="table-header">
+            <div class="col col-1">Name</div>
+            <div class="col col-2">Diagnosis</div>
+            <div class="col col-3">Insurance number</div>
+            <div class="col col-4">Doctor's name</div>
+            <div class="col col-5">In hospital</div>
+        </li>
+        <li class="table-row">
+            <div class="col col-1" data-label="Name" th:text="${patient.getName()}"></div>
+            <div class="col col-2" data-label="Diagnosis" th:text="${patient.getDiagnosis()}"></div>
+            <div class="col col-3" data-label="Insurance number" th:text="${patient.getInsuranceNumber()}"></div>
+            <div class="col col-4" data-label="Doctor's name" th:text="${patient.getDoctorsName()}"></div>
+            <div class="col col-5" data-label="In hospital" th:text="${patient.getStatus()} ? 'Yes' : 'No'"></div>
+        </li>
+    </ul>
+</div>
+<div class="buttons">
+    <a th:href="@{/patients/{insuranceNumber}/edit-patient(insuranceNumber=${patient.getInsuranceNumber()})}"
+       class="btn btn-primary">Edit patient</a>
+    <form th:method="DELETE" th:action="@{/patients/{insuranceNumber}(insuranceNumber=${patient.getInsuranceNumber()})}">
+        <input type="submit" value="Delete patient" class="btn btn-dark"/>
+    </form>
+    <a href="/patients" class="btn btn-secondary">Back to patients</a>
+</div>
+</body>
+</html>
